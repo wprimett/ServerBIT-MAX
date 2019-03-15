@@ -1,32 +1,32 @@
-inlets = 4;
+inlets = 3;
 outlets = 3;
 
 var lbls=[];
-var ch_mask=[0];
+var dev_mask = [0];
 var num_devices=1;
 var dev_mask = [0];
-var sep_chnlz = false;
+var chnlz = false;
 
-function output_osc(json_data){
-	//post("calling device IDs: " + dev_mask + "\n");
-	
+function output_osc(json_data){	
 	var osc_str=[];
 	dev_mask.forEach(function(dev_id) {
 		ch_mask.forEach(function(i) {
-			var data = json_data.get(lbls[i]);
+			var data = json_data.get(JSON.stringify(dev_id));
+			data = data.get(lbls[i]);
 			osc_str.push("/"+dev_id+"/bitalino/"+lbls[i] + " " + data);
 		});
 	});
 	outlet(1, osc_str);
 }
 
-function output_osc_unlabled(array_data){
-	//post("calling device IDs: " + dev_mask + "\n");
+function output_osc_unlabled(json_data){
 	var osc_str=[];
-	var data = 	JSON.stringify(array_data)
-	data = data.replace(/[[\]]/g,'')
-	data = data.replace(/,/g, ' ')
 	dev_mask.forEach(function(dev_id) {
+		data = []
+		var dev_id_data = json_data.get(JSON.stringify(dev_id));
+		ch_mask.forEach(function(i) {
+			data.push(dev_id_data.get(lbls[i]));
+		});
 		osc_str.push("/"+dev_id+"/bitalino" + " " + data);
 	});
 	outlet(1, osc_str);
@@ -38,11 +38,11 @@ function output_ws(json_data)
 	outlet(0, output);
 }
 
-function get_ws_dict()
+function get_ws_dict(dev_data)
 {
 	var toggle = this.patcher.getnamed("sep_chnlz");
     sep_chnlz = Boolean(Number(toggle.getvalueof()));
-	var data = [100, 200];
+	var data = dev_data;
 	
 	//var data = 156;
 	var json_out = new Dict("str_json");
@@ -50,26 +50,29 @@ function get_ws_dict()
 	res = '{';
 	if (num_devices < 2){
 		ch_mask.forEach(function(i) {
-			res += '"' + lbls[i] + '": '  + JSON.stringify(data) + ",";
+			res += '"' + lbls[i] + '": '  + JSON.stringify(data[i]) + ",";
 		});
 		res = res.slice(0, -1)+'}';
 	}else{
 		dev_mask.forEach(function(dev_id) {
 			res = res + '"' + dev_id + '": ' + '{';
 			ch_mask.forEach(function(i) {
-				res += '"' + lbls[i] + '": '  + JSON.stringify(data) + ",";
+				//TODO: data[dev_id]
+				res += '"' + lbls[i] + '": '  + JSON.stringify(data[i]) + ",";
 			});
 			res = res.slice(0, -1)+'},';
 			//post(res);
 			//res = '{' + '"' + dev_id + '": ' + res;
 		});
 		res = res.slice(0, -1)+'}';
-		post(res);
 	}
 	json_out.parse(res.toString());
 	output_ws(json_out);
+	if (num_devices < 2) 
+		res = '{"' + 0 + '": ' + res + '}';
+		json_out.parse(res.toString());
 	if (!sep_chnlz) {
-		output_osc_unlabled(data);
+		output_osc_unlabled(json_out);
 	}
 	else{
 		output_osc(json_out);
@@ -78,30 +81,32 @@ function get_ws_dict()
 
 function bang()
 {
-	if (lbls.length > 0){
-		get_ws_dict();
-	}else{
-		post("please enter label names");
-		outlet(2, "please enter label names");
-	}
+
 }
 
 function list(){
-	ch_mask = arrayfromargs(arguments);
-	post("channel mask: " + ch_mask + "\n");
-}
-
-function text()
-{
-	lbls = arrayfromargs(arguments);
-	post("json labels: " + lbls + "\n");
-	//get_ws_dict();
+	if (inlet == 0) {
+		var device_data = arrayfromargs(arguments);
+		get_ws_dict(device_data);
+	} else if (inlet == 2) {
+		ch_mask = arrayfromargs(arguments);
+		ch_mask.push(6, 7, 8, 9); //include 4 I/Os
+		post("channel mask: " + ch_mask + "\n");
+	} 
 }
 
 function msg_int(v)
 {
 	num_devices = v+1;
 	dev_mask = range(num_devices);
+}
+
+function text()
+{
+	lbls = arrayfromargs(arguments);
+	lbls.push("I1", "I2", "O1", "O2");
+	post("json labels: " + lbls + "\n");
+	//get_ws_dict();
 }
 
 //http://cwestblog.com/2013/12/16/javascript-range-array-function/
