@@ -768,7 +768,6 @@
 , 			{
 				"box" : 				{
 					"id" : "obj-171",
-					"int" : 1,
 					"maxclass" : "gswitch2",
 					"numinlets" : 2,
 					"numoutlets" : 2,
@@ -3126,15 +3125,16 @@
 					"fontsize" : 14.0,
 					"gradient" : 1,
 					"id" : "obj-65",
+					"linecount" : 2,
 					"maxclass" : "message",
 					"numinlets" : 2,
 					"numoutlets" : 1,
 					"outlettype" : [ "" ],
-					"patching_rect" : [ 32.520263671875, 628.15283203125, 115.0, 25.0 ],
+					"patching_rect" : [ 32.520263671875, 628.15283203125, 115.0, 42.0 ],
 					"presentation" : 1,
 					"presentation_linecount" : 2,
 					"presentation_rect" : [ 352.0, 319.86138916015625, 102.0, 42.0 ],
-					"text" : "device 0 (R-IoT)",
+					"text" : "device 0 (BITalino)",
 					"textjustification" : 1
 				}
 
@@ -3619,7 +3619,7 @@
 					"numinlets" : 2,
 					"numoutlets" : 1,
 					"outlettype" : [ "" ],
-					"patching_rect" : [ 1229.120361328125, 1388.0, 35.0, 22.0 ],
+					"patching_rect" : [ 1048.120361328125, 1279.408447265625, 35.0, 22.0 ],
 					"text" : "clear"
 				}
 
@@ -3655,7 +3655,7 @@
 					"numinlets" : 1,
 					"numoutlets" : 1,
 					"outlettype" : [ "bang" ],
-					"patching_rect" : [ 1093.0, 1268.0, 58.0, 22.0 ],
+					"patching_rect" : [ 1048.120361328125, 1253.0, 58.0, 22.0 ],
 					"text" : "loadbang"
 				}
 
@@ -3675,7 +3675,7 @@
 , 			{
 				"box" : 				{
 					"id" : "obj-34",
-					"items" : [ "write", ",", "read", ",", "clearall", ",", "save_config_1", ",", "save_config_2", ",", "save_config_3", ",", "write", ",", "read", ",", "clearall", ",", "save_config_1", ",", "save_config_2", ",", "save_config_3", ",", "write", ",", "read", ",", "clearall", ",", "save_config_1", ",", "save_config_2", ",", "save_config_3", ",", "write", ",", "read", ",", "clearall", ",", "save_config_1", ",", "save_config_2", ",", "save_config_3", ",", "write", ",", "read", ",", "clearall", ",", "save_config_1", ",", "save_config_2", ",", "save_config_3", ",", "write", ",", "read", ",", "clearall", ",", "save_config_1", ",", "save_config_2", ",", "save_config_3", ",", "write", ",", "read", ",", "clearall", ",", "save_config_1", ",", "save_config_2", ",", "save_config_3", ",", "write", ",", "read", ",", "clearall", ",", "save_config_1", ",", "save_config_2", ",", "save_config_3", ",", "write", ",", "read", ",", "clearall", ",", "save_config_1", ",", "save_config_2", ",", "save_config_3", ",", "write", ",", "read", ",", "clearall", ",", "save_config_1", ",", "save_config_2", ",", "save_config_3", ",", "write", ",", "read", ",", "clearall", ",", "save_config_1", ",", "save_config_2", ",", "save_config_3", ",", "write", ",", "read", ",", "clearall", ",", "save_config_1", ",", "save_config_2", ",", "save_config_3", ",", "write", ",", "read", ",", "clearall", ",", "save_config_1", ",", "save_config_2", ",", "save_config_3" ],
+					"items" : [ "write", ",", "read", ",", "clearall", ",", "save_config_1", ",", "save_config_2", ",", "save_config_3" ],
 					"maxclass" : "umenu",
 					"numinlets" : 1,
 					"numoutlets" : 3,
@@ -3949,7 +3949,7 @@
 					"fontname" : "Arial",
 					"fontsize" : 14.0,
 					"id" : "obj-4",
-					"items" : [ "select...", ",", "/0/raw" ],
+					"items" : [ "select...", ",", "BITalino-52-37-DevB", ",", "BITalino-21-76-DevB" ],
 					"maxclass" : "umenu",
 					"numinlets" : 1,
 					"numoutlets" : 3,
@@ -13223,6 +13223,15 @@
 , 			{
 				"patchline" : 				{
 					"destination" : [ "obj-34", 0 ],
+					"order" : 0,
+					"source" : [ "obj-61", 0 ]
+				}
+
+			}
+, 			{
+				"patchline" : 				{
+					"destination" : [ "obj-8", 0 ],
+					"order" : 1,
 					"source" : [ "obj-61", 0 ]
 				}
 
@@ -13447,7 +13456,7 @@
 			}
 , 			{
 				"patchline" : 				{
-					"destination" : [ "obj-8", 0 ],
+					"destination" : [ "obj-61", 0 ],
 					"source" : [ "obj-94", 0 ]
 				}
 
