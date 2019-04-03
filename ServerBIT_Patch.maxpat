@@ -40,6 +40,30 @@
 		"showontab" : 1,
 		"boxes" : [ 			{
 				"box" : 				{
+					"id" : "obj-26",
+					"maxclass" : "newobj",
+					"numinlets" : 1,
+					"numoutlets" : 1,
+					"outlettype" : [ "bang" ],
+					"patching_rect" : [ 552.520263671875, 833.0, 58.0, 22.0 ],
+					"text" : "loadbang"
+				}
+
+			}
+, 			{
+				"box" : 				{
+					"id" : "obj-25",
+					"maxclass" : "message",
+					"numinlets" : 2,
+					"numoutlets" : 1,
+					"outlettype" : [ "" ],
+					"patching_rect" : [ 552.520263671875, 861.0, 29.5, 22.0 ],
+					"text" : "10"
+				}
+
+			}
+, 			{
+				"box" : 				{
 					"id" : "obj-32",
 					"maxclass" : "newobj",
 					"numinlets" : 1,
@@ -744,6 +768,7 @@
 , 			{
 				"box" : 				{
 					"id" : "obj-171",
+					"int" : 1,
 					"maxclass" : "gswitch2",
 					"numinlets" : 2,
 					"numoutlets" : 2,
@@ -1555,7 +1580,7 @@
 					"maxclass" : "comment",
 					"numinlets" : 1,
 					"numoutlets" : 0,
-					"patching_rect" : [ 606.0, 875.0, 161.14996337890625, 23.0 ],
+					"patching_rect" : [ 606.0, 890.0, 161.14996337890625, 23.0 ],
 					"presentation" : 1,
 					"presentation_rect" : [ 408.85003662109375, 387.86138916015625, 166.14996337890625, 23.0 ],
 					"text" : "Sampling Interval (ms)",
@@ -3101,16 +3126,15 @@
 					"fontsize" : 14.0,
 					"gradient" : 1,
 					"id" : "obj-65",
-					"linecount" : 2,
 					"maxclass" : "message",
 					"numinlets" : 2,
 					"numoutlets" : 1,
 					"outlettype" : [ "" ],
-					"patching_rect" : [ 32.520263671875, 628.15283203125, 115.0, 42.0 ],
+					"patching_rect" : [ 32.520263671875, 628.15283203125, 115.0, 25.0 ],
 					"presentation" : 1,
 					"presentation_linecount" : 2,
 					"presentation_rect" : [ 352.0, 319.86138916015625, 102.0, 42.0 ],
-					"text" : "device 0 (BITalino)",
+					"text" : "device 0 (R-IoT)",
 					"textjustification" : 1
 				}
 
@@ -3651,7 +3675,7 @@
 , 			{
 				"box" : 				{
 					"id" : "obj-34",
-					"items" : [ "write", ",", "read", ",", "clearall", ",", "save_config_1", ",", "save_config_2", ",", "save_config_3", ",", "write", ",", "read", ",", "clearall", ",", "save_config_1", ",", "save_config_2", ",", "save_config_3", ",", "write", ",", "read", ",", "clearall", ",", "save_config_1", ",", "save_config_2", ",", "save_config_3", ",", "write", ",", "read", ",", "clearall", ",", "save_config_1", ",", "save_config_2", ",", "save_config_3", ",", "write", ",", "read", ",", "clearall", ",", "save_config_1", ",", "save_config_2", ",", "save_config_3", ",", "write", ",", "read", ",", "clearall", ",", "save_config_1", ",", "save_config_2", ",", "save_config_3", ",", "write", ",", "read", ",", "clearall", ",", "save_config_1", ",", "save_config_2", ",", "save_config_3", ",", "write", ",", "read", ",", "clearall", ",", "save_config_1", ",", "save_config_2", ",", "save_config_3", ",", "write", ",", "read", ",", "clearall", ",", "save_config_1", ",", "save_config_2", ",", "save_config_3", ",", "write", ",", "read", ",", "clearall", ",", "save_config_1", ",", "save_config_2", ",", "save_config_3", ",", "write", ",", "read", ",", "clearall", ",", "save_config_1", ",", "save_config_2", ",", "save_config_3" ],
+					"items" : [ "write", ",", "read", ",", "clearall", ",", "save_config_1", ",", "save_config_2", ",", "save_config_3", ",", "write", ",", "read", ",", "clearall", ",", "save_config_1", ",", "save_config_2", ",", "save_config_3", ",", "write", ",", "read", ",", "clearall", ",", "save_config_1", ",", "save_config_2", ",", "save_config_3", ",", "write", ",", "read", ",", "clearall", ",", "save_config_1", ",", "save_config_2", ",", "save_config_3", ",", "write", ",", "read", ",", "clearall", ",", "save_config_1", ",", "save_config_2", ",", "save_config_3", ",", "write", ",", "read", ",", "clearall", ",", "save_config_1", ",", "save_config_2", ",", "save_config_3", ",", "write", ",", "read", ",", "clearall", ",", "save_config_1", ",", "save_config_2", ",", "save_config_3", ",", "write", ",", "read", ",", "clearall", ",", "save_config_1", ",", "save_config_2", ",", "save_config_3", ",", "write", ",", "read", ",", "clearall", ",", "save_config_1", ",", "save_config_2", ",", "save_config_3", ",", "write", ",", "read", ",", "clearall", ",", "save_config_1", ",", "save_config_2", ",", "save_config_3", ",", "write", ",", "read", ",", "clearall", ",", "save_config_1", ",", "save_config_2", ",", "save_config_3", ",", "write", ",", "read", ",", "clearall", ",", "save_config_1", ",", "save_config_2", ",", "save_config_3", ",", "write", ",", "read", ",", "clearall", ",", "save_config_1", ",", "save_config_2", ",", "save_config_3" ],
 					"maxclass" : "umenu",
 					"numinlets" : 1,
 					"numoutlets" : 3,
@@ -3671,7 +3695,7 @@
 					"numoutlets" : 2,
 					"outlettype" : [ "", "bang" ],
 					"parameter_enable" : 0,
-					"patching_rect" : [ 552.520263671875, 875.0, 50.0, 22.0 ],
+					"patching_rect" : [ 552.520263671875, 890.0, 50.0, 22.0 ],
 					"presentation" : 1,
 					"presentation_rect" : [ 352.0, 387.86138916015625, 50.0, 22.0 ]
 				}
@@ -3925,7 +3949,7 @@
 					"fontname" : "Arial",
 					"fontsize" : 14.0,
 					"id" : "obj-4",
-					"items" : [ "select...", ",", "BITalino-52-37-DevB", ",", "BITalino-21-76-DevB" ],
+					"items" : [ "select...", ",", "/0/raw" ],
 					"maxclass" : "umenu",
 					"numinlets" : 1,
 					"numoutlets" : 3,
@@ -3956,7 +3980,7 @@
 						}
 ,
 						"classnamespace" : "box",
-						"rect" : [ 65.0, 104.0, 1581.0, 912.0 ],
+						"rect" : [ 0.0, 26.0, 1581.0, 912.0 ],
 						"bglocked" : 0,
 						"openinpresentation" : 0,
 						"default_fontsize" : 12.0,
@@ -12095,7 +12119,7 @@
 					"numinlets" : 0,
 					"numoutlets" : 1,
 					"outlettype" : [ "" ],
-					"patching_rect" : [ 1371.120361328125, 258.251556396484375, 87.0, 22.0 ],
+					"patching_rect" : [ 1371.120361328125, 201.78887939453125, 87.0, 22.0 ],
 					"text" : "r num_devices"
 				}
 
@@ -12146,7 +12170,7 @@
 					"numinlets" : 0,
 					"numoutlets" : 1,
 					"outlettype" : [ "" ],
-					"patching_rect" : [ 1081.270263671875, 229.78887939453125, 87.0, 22.0 ],
+					"patching_rect" : [ 1081.270263671875, 213.78887939453125, 87.0, 22.0 ],
 					"text" : "r num_devices"
 				}
 
@@ -12722,13 +12746,6 @@
 			}
 , 			{
 				"patchline" : 				{
-					"destination" : [ "obj-18", 0 ],
-					"source" : [ "obj-12", 0 ]
-				}
-
-			}
-, 			{
-				"patchline" : 				{
 					"destination" : [ "obj-76", 2 ],
 					"source" : [ "obj-122", 0 ]
 				}
@@ -13044,6 +13061,20 @@
 			}
 , 			{
 				"patchline" : 				{
+					"destination" : [ "obj-27", 0 ],
+					"source" : [ "obj-25", 0 ]
+				}
+
+			}
+, 			{
+				"patchline" : 				{
+					"destination" : [ "obj-25", 0 ],
+					"source" : [ "obj-26", 0 ]
+				}
+
+			}
+, 			{
+				"patchline" : 				{
 					"destination" : [ "obj-169", 4 ],
 					"source" : [ "obj-27", 0 ]
 				}
@@ -13081,13 +13112,6 @@
 				"patchline" : 				{
 					"destination" : [ "obj-44", 0 ],
 					"source" : [ "obj-37", 0 ]
-				}
-
-			}
-, 			{
-				"patchline" : 				{
-					"destination" : [ "obj-37", 0 ],
-					"source" : [ "obj-38", 0 ]
 				}
 
 			}

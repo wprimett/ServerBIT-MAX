@@ -60,21 +60,25 @@ function get_ws_dict(dev_data)
     sep_chnlz = Boolean(Number(toggle.getvalueof()));
 	var data = dev_data;
 	lbls = all_lbls[dev_types[0]];
+	ch_mask = get_ch_mask(0);
 	var json_out = new Dict("str_json");
 	var res = ''
 	res = '{';
+	///single device 
 	if (num_devices < 2){
 		ch_mask.forEach(function(i) {
 			res += '"' + lbls[i] + '": '  + JSON.stringify(data[i]) + ",";
 		});
 		res = res.slice(0, -1)+'}';
+	///multiple devices 
 	}else{
 		dev_mask.forEach(function(dev_id) {
 			lbls = all_lbls[dev_type[dev_id]];
+			ch_mask = get_ch_mask(dev_id);
 			res = res + '"' + dev_id + '": ' + '{';
 			ch_mask.forEach(function(i) {
 				//TODO: data[dev_id]
-				res += '"' + lbls[i] + '": '  + JSON.stringify(data[i]) + ",";
+				res += '"' + lbls[i] + '": '  + JSON.stringify(data[dev_id][i]) + ",";
 			});
 			res = res.slice(0, -1)+'},';
 		});
@@ -105,7 +109,7 @@ function list(){
 	} else if (inlet == 2) {
 		ch_mask = arrayfromargs(arguments);
 		ch_mask.push(6, 7, 8, 9); //include 4 I/Os
-		ch_mask = get_ch_mask(0);
+		//ch_mask = get_ch_mask(0);
 		post("channel mask: " + ch_mask + "\n");
 	} 
 	if (inlet == 3) {
