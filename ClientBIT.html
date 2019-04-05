@@ -1,5 +1,5 @@
 <html>
-<head>
+<!-- <head>
   <style>
   html, body {
     height: 100%;
@@ -12,7 +12,7 @@
     overflow:hidden;
   }
   </style>
-</head>
+</head> -->
 
 <body>
 <div id="post">Loading...</div>
@@ -40,7 +40,7 @@ function post(msg) {
 
 ///// websocket /////
 
-var wsocket; 
+var wsocket;
 var connected = false;
 var connectTask;
 
@@ -49,10 +49,10 @@ function ws_connect() {
     if ('WebSocket' in window) {
         post('Connecting');
         var host = querystring.host || "localhost";
-        var port = querystring.port || "8080";
+        var port = querystring.port || "9001";
         var address = "ws://" + host + ":" + port + "/";
         wsocket = new WebSocket(address);
-        wsocket.onopen = function(ev) {        
+        wsocket.onopen = function(ev) {
             post('CONNECTED to ' + address);
             connected = true;
             // cancel the auto-reconnect task:
@@ -61,10 +61,10 @@ function ws_connect() {
             //var message = 'hello from browser';
             //post('SENT: ' + message);
             //wsocket.send(message);
-			
+
 			// send some JSON:
 			//wsocket.send(JSON.stringify({ "hello": "world" }));
-			
+
 			// client messages sent with a "*" prefix will have the "*" stripped,
 			// but the server will broadcast them all back to all other clients
 			// broadcast a hello:
@@ -101,13 +101,13 @@ function ws_connect() {
 function send(msg) {
 	if(wsocket != undefined) wsocket.send(msg);
 	post("sent msg:" + msg.length + ": " + msg);
-        	
+
 }
 
 ///// sequencing /////
 
 function handlemessage(msg) {
-	
+
 }
 
 ///// start up /////
