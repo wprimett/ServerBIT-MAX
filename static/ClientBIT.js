@@ -9,3 +9,7 @@ var querystring = (function() {
   }
   return query;
 })();
+
+var json_to_arr = (function(json_str) {
+  return json_str.replace(/[ ,]+/g, ",").split(',').map(Number);
+});

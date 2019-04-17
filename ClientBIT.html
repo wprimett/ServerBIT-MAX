@@ -1,119 +1,44 @@
+<!-- ClientBIT for ServerBIT MAX: Merges scripts from python ServerBIT:
+https://github.com/BITalinoWorld/revolution-python-serverbit
+and Max_Worldmaking_Package ws example:
+https://github.com/worldmaking/Max_Worldmaking_Package/ -->
+
 <html>
-<!-- <head>
-  <style>
-  html, body {
-    height: 100%;
-    width: 100%;
-    padding: 0px;
-    margin: 0px;
-    color:#000;
-    font-size: 10;
-    font-family:'Helvetica', sans-serif;
-    overflow:hidden;
-  }
-  </style>
-</head> -->
+    <script language="javascript" type="text/javascript" src="static/jquery.js"></script>
+    <script language="javascript" type="text/javascript" src="static/jquery.flot.js"></script>
+    <script language="javascript" type="text/javascript" src="static/ClientBIT.js"></script>
 
-<body>
-<div id="post">Loading...</div>
-<script>
+    <script type="text/javascript">
+        var ws_host = querystring.host || "localhost";
+        var ws_port = querystring.port || "9001";
+        var ws_address = "ws://" + ws_host + ":" + ws_port + "/";
+        console.log(ws_address);
+        // Establish a connection to the ServerBIT
+        var ws = new WebSocket(ws_address);
 
-///// utils /////
-
-// get url args:
-var querystring = (function() {
-	var qstr = window.location.search;
-	var query = {};
-	var a = qstr.substr(1).split('&');
-	for (var i = 0; i < a.length; i++) {
-		var b = a[i].split('=');
-		query[decodeURIComponent(b[0])] = decodeURIComponent(b[1] || '');
-	}
-	return query;
-})();
-
-// debug messaging:
-function post(msg) {
-	console.log(msg);
-	document.getElementById("post").innerHTML = msg + "<br>";
-}
-
-///// websocket /////
-
-var wsocket;
-var connected = false;
-var connectTask;
-
-function ws_connect() {
-	if (connected) return;
-    if ('WebSocket' in window) {
-        post('Connecting');
-        var host = querystring.host || "localhost";
-        var port = querystring.port || "9001";
-        var address = "ws://" + host + ":" + port + "/";
-        wsocket = new WebSocket(address);
-        wsocket.onopen = function(ev) {
-            post('CONNECTED to ' + address);
-            connected = true;
-            // cancel the auto-reconnect task:
-            if (connectTask != undefined) clearInterval(connectTask);
-            // apparently this first reply is necessary
-            //var message = 'hello from browser';
-            //post('SENT: ' + message);
-            //wsocket.send(message);
-
-			// send some JSON:
-			//wsocket.send(JSON.stringify({ "hello": "world" }));
-
-			// client messages sent with a "*" prefix will have the "*" stripped,
-			// but the server will broadcast them all back to all other clients
-			// broadcast a hello:
-			send("*hello "+Math.floor(Math.random()*100));
+        ws.onopen = function() {
         };
 
-        wsocket.onclose = function(ev) {
-            post('DISCONNECTED from ' + address);
-            connected = false;
-            // set up an auto-reconnect task:
-            //connectTask = setInterval(ws_connect, 1000);
+        // Process the responses sent by the ServerBIT
+        ws.onmessage = function (e) {
+            data = JSON.parse(e.data)
+            var d1 = [];
+            ch = 'A1'
+            var ch_data = json_to_arr(data[ch]);
+            for (var i = 0; i < ch_data.length; i += 1)
+                d1.push([i, ch_data[i]]);
+            $.plot($("#placeholder"), [ d1 ], {yaxis: {min:0, max: 1024}});
+          };
+
+        // Detect when the page is unloaded or close
+        window.onbeforeunload = function() {
+            ws.onclose = function () {};
+            ws.close()
         };
 
-        wsocket.onmessage = function(ev) {
-        	// was it a dict?
-        	if (ev.data.charAt(0) == "{") {
-        		// attempt to json parse it:
-        		var tree = JSON.parse(ev.data);
-        		post("parsed " + JSON.stringify(tree));
-        	} else {
-        		post("received msg:" + ev.data.length + ": " + ev.data.substr(0, 50));
-        	}
-        };
-
-        wsocket.onerror = function(ev) {
-            post("WebSocket error");
-        };
-
-    } else {
-        post("WebSockets are not available in this browser!!!");
-    }
-}
-
-function send(msg) {
-	if(wsocket != undefined) wsocket.send(msg);
-	post("sent msg:" + msg.length + ": " + msg);
-
-}
-
-///// sequencing /////
-
-function handlemessage(msg) {
-
-}
-
-///// start up /////
-
-ws_connect();
-
-</script>
-</body>
+    </script>
+    <body>
+        <div><h1>BITalinoWS</h1></div>
+	<div id="placeholder" style="width:600px;height:300px;"></div>
+    </body>
 </html>

@@ -1,9 +1,9 @@
-inlets = 4;
+inlets = 5;
 outlets = 3;
 
 var lbls=[];
 var dev_mask = [0];
-var num_devices=1;
+var num_devices= 1;
 var dev_mask = [0];
 var chnlz = false;
 
@@ -15,6 +15,9 @@ var all_lbls = {"bitalino" : [],
 			"r-iot" : riot_lbls
 			};
 var dev_types = ["bitalino"];
+var buffer_length = 1;
+var osc_enable = false;
+var sep_chnlz = false;
 
 function get_ch_mask(id)
 {
@@ -56,8 +59,6 @@ function output_ws(json_data)
 
 function get_ws_dict(dev_data)
 {
-	var toggle = this.patcher.getnamed("sep_chnlz");
-    sep_chnlz = Boolean(Number(toggle.getvalueof()));
 	var data = dev_data;
 	lbls = all_lbls[dev_types[0]];
 	ch_mask = get_ch_mask(0);
@@ -67,7 +68,8 @@ function get_ws_dict(dev_data)
 	///single device 
 	if (num_devices < 2){
 		ch_mask.forEach(function(i) {
-			res += '"' + lbls[i] + '": '  + JSON.stringify(data[i]) + ",";
+			data_str = data[i];
+			res += '"' + lbls[i] + '": '  + JSON.stringify(data_str) + ",";
 		});
 		res = res.slice(0, -1)+'}';
 	///multiple devices 
@@ -88,12 +90,21 @@ function get_ws_dict(dev_data)
 	output_ws(json_out);
 	if (num_devices < 2) 
 		res = '{"' + 0 + '": ' + res + '}';
-		json_out.parse(res.toString());
-	if (!sep_chnlz) {
-		output_osc_unlabled(json_out);
+	json_out.parse(res.toString());
+	if (osc_enable){
+		if (!sep_chnlz) {
+			output_osc_unlabled(json_out);
+		}
+		else{
+			output_osc(json_out);
+		}
 	}
-	else{
-		output_osc(json_out);
+}
+
+function update() {
+	if (inlet == 1){
+		osc_enable = Boolean(Number(this.patcher.getnamed("osc_enable").getvalueof()));
+    	sep_chnlz = Boolean(Number(this.patcher.getnamed("sep_chnlz").getvalueof()));
 	}
 }
 
@@ -101,10 +112,14 @@ function list(){
 	if (inlet == 0) {
 		var device_data = arrayfromargs(arguments);
 		get_ws_dict(device_data);
-	} else if (inlet == 2) {
+	}
+	if (inlet == 2) {
 		ch_mask = arrayfromargs(arguments);
 		ch_mask.push(6, 7, 8, 9); //include 4 I/Os
-		//ch_mask = get_ch_mask(0);
+		start_aquitition = Boolean(Number(this.patcher.getnamed("start_aquitition").getvalueof()));
+		if (osc_enable && start_aquitition){
+			outlet(2, [ch_mask.length, JSON.stringify(dev_mask).replace(/[[\]]/g,'')]);
+		}
 		post("channel mask: " + ch_mask + "\n");
 	} 
 	if (inlet == 3) {
@@ -115,20 +130,27 @@ function list(){
 			post("new device type:" + device_type);
 			dev_types[device_id] = device_type;
 		}
-		//else if (dev_type.includes("R-IoT")) {
-		//	post("device type: R-IoT");
-		//}
 	}
 }
 
 function msg_int(v)
 {
-	num_devices = v+1;
-	dev_mask = range(num_devices);
+	if (inlet == 0) {			
+		num_devices = v+1;
+		dev_mask = range(num_devices);
+	}
+	if (inlet == 4) {
+		buffer_length = v;
+	}
 }
 
 function text()
 {
+	if (inlet == 0) {
+		//var device_data = arrayfromargs(arguments);
+		//post(device_data);
+		//get_ws_dict(device_data);
+	}
 	if (inlet == 1) {			
 		lbls = arrayfromargs(arguments);
 		lbls.push("I1", "I2", "O1", "O2");
@@ -157,6 +179,10 @@ function range(start, edge, step) {
   return ret;
 }
 
+function stringify_json_array(data){
+	return "[" + JSON.stringify(data) + "]";
+}
+
 function charCodeString2string (s){
 	if(typeof(s) != 'string') return false;
 		s2 = '';
@@ -166,4 +192,20 @@ function charCodeString2string (s){
 			s2 += String.fromCharCode(parseInt(a[i]));
 		}
 		return s2;
-	}
+}
+	
+var StaticBuffer = function(max_length){
+  buffer = new Array(0); 
+  return {
+	get_buffer : function(){return buffer;},
+    get  : function(key){return buffer[key];},
+	get_len : function(){return buffer.length;},
+    write : function(item){
+		if (buffer.length == max_length){
+			buffer = new Array(0);
+		}
+		buffer.unshift(item);
+		post(buffer);
+    }
+  };
+};
