@@ -23,8 +23,8 @@ https://github.com/worldmaking/Max_Worldmaking_Package/ -->
         ws.onmessage = function (e) {
             data = JSON.parse(e.data)
             var d1 = [];
-            ch = 'A1'
-            var ch_data = json_to_arr(data[ch]);
+            ch = 'A2'
+            var ch_data = json_to_arr(data[ch].toString());
             for (var i = 0; i < ch_data.length; i += 1)
                 d1.push([i, ch_data[i]]);
             $.plot($("#placeholder"), [ d1 ], {yaxis: {min:0, max: 1024}});
@@ -35,6 +35,10 @@ https://github.com/worldmaking/Max_Worldmaking_Package/ -->
             ws.onclose = function () {};
             ws.close()
         };
+
+        var json_to_arr = (function(json_str) {
+          return json_str.replace(/[ ,]+/g, ",").split(',').map(Number);
+        });
 
     </script>
     <body>
