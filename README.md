@@ -3,8 +3,9 @@ Currently MacOS only
 ### Installation and Startup
 
 #### Standalone application
-- ServerBIT-MAX has been compiled as a standalone application which does not require a MAX/MSP licence to run. This can be found in the [releases](/releases) tab
-- To run as a standalone application, simply launch (Right-click & Open) the application to start
+- ServerBIT-MAX has been compiled as a standalone application which does not require a MAX/MSP licence to run.
+- Drag *ServerBIT-MAX.app* to the Applications directory
+- To run, simply launch (Right-click & Open) the application to start
 
 #### From source
 
