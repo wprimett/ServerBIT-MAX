@@ -16,7 +16,7 @@ Currently MacOS only
 
 Device must be switched on and already paired with the computer (make sure bluetooth is enabled).
 
-![ServerBIT_MAX-0](https://user-images.githubusercontent.com/9369774/61723057-4efbc080-ad63-11e9-972c-e9c20910cf1d.gif)
+![ServerBIT_MAX-0](https://user-images.githubusercontent.com/9369774/61723051-4c00d000-ad63-11e9-9ec9-4015c4236a1c.gif)
 
 **R-IoT**
 
@@ -25,4 +25,4 @@ You must be connected to the same wireless network as the R-IoT. From here, the 
 #### #2 Choose a network protocol and begin data acquisition
 Go the the `data_output` tab and select either OSC or Websockets. You can then edit the chanel mask, label and output destination and click the *Start Acquisition* toggle to begin streaming. You should start seeing the JSON output below.
 
-![ServerBIT_MAX-1](https://user-images.githubusercontent.com/9369774/61723051-4c00d000-ad63-11e9-9ec9-4015c4236a1c.gif)
+![ServerBIT_MAX-1](https://user-images.githubusercontent.com/9369774/61723057-4efbc080-ad63-11e9-972c-e9c20910cf1d.gif)
